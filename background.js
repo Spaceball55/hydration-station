@@ -2,6 +2,8 @@ const now = new Date();
 
 console.log(now);
 
+var newAlarm;
+
 chrome.storage.onChanged.addListener(function (changes, namespace) {
     for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
       console.log(
@@ -11,7 +13,15 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     }
   });
 
-
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse){
+    if(request.time){
+      newAlarm = request.time;
+      console.log(newAlarm);
+      sendResponse({response: 'recieved!'});
+    }
+  }
+)
 //here I want to use onAlarm element and also storage.onChanged I think
 
 /*
