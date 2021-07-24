@@ -1,3 +1,5 @@
+try{
+
 const now = new Date();
 
 console.log(now);
@@ -19,9 +21,19 @@ chrome.runtime.onMessage.addListener(
       newAlarm = request.time;
       console.log(newAlarm);
       sendResponse({response: 'recieved!'});
+      chrome.alarms.create(test, {periodInMinutes: newAlarm});
     }
   }
 )
+
+chrome.alarms.onAlarm.addListener(function() {
+  console.log("Got an alarm!");
+});
+}
+catch (e){
+  console.log(e);
+}
+
 //here I want to use onAlarm element and also storage.onChanged I think
 
 /*
@@ -30,5 +42,7 @@ software structure ideas:
 
 alarm will essentially go off and set off some event.js file, in which we define what we want to say on the event that the alarm rings, I think
 
+
+I think that I should also make an alarms.html file where I store all of the alarms and the user can configure them on/off
 
 */
